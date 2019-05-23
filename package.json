@@ -17,6 +17,17 @@
   },
   "homepage": "https://github.com/itskpalusa/GLStudentPortal#readme",
   "dependencies": {
-    "express": "^4.17.0"
+    "concurrently": "^3.6.1",
+    "express": "^4.17.0",
+    "express-flash": "0.0.2",
+    "express-session": "^1.16.1",
+    "async": "^2.6.2",
+    "bcrypt-nodejs": "0.0.3",
+    "bcryptjs": "^2.4.3",
+    "mongoose": "^5.5.11",
+    "npm": "^6.9.0",
+    "passport": "^0.4.0",
+    "passport-jwt": "^4.0.0",
+    "passport-local": "^1.0.0"
   }
 }
