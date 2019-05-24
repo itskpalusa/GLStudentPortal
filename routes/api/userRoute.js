@@ -13,6 +13,7 @@ const User = require("../../models/UserModel");
 
 // Load Input Validation
 const validateRegisterInput = require("../../validation/auth/registerValidation");
+const validateLoginInput = require("../../validation/auth/loginValidation");
 
 // @route   GET api/users/test
 // @desc    Tests users route
