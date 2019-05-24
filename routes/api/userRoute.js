@@ -98,6 +98,67 @@ router.post("/registerAndAuth", (req, res) => {
   });
 });
 
+// @route   GET api/users/login
+// @desc    Login User / Returning JWT Token
+// @access  Public
+router.post("/login", (req, res) => {
+  const { errors, isValid } = validateLoginInput(req.body);
+
+  // Check Validation
+  if (!isValid) {
+    console.log("not valid");
+    return res.status(400).json(errors);
+  }
+
+  const email = req.body.email;
+  const password = req.body.password;
+
+  // Find user by email
+  User.findOne({
+    email
+  }).then(user => {
+    // Check for user
+    if (!user) {
+      errors.email = "User not found";
+      return res.status(404).json(errors);
+    }
+
+    // Check Password
+    bcrypt.compare(password, user.password, (err, isMatch) => {
+      if (err) {
+        console.log(err);
+      }
+
+      if (isMatch) {
+        // User Matched
+        const payload = {
+          id: user.id,
+          name: user.name
+        }; // Create JWT Payload
+
+        // Sign Token
+        jwt.sign(
+          payload,
+          keys.secretOrKey,
+          {
+            expiresIn: 3600
+          },
+          (err, token) => {
+            res.json({
+              success: true,
+              token: "Bearer " + token
+            });
+          }
+        );
+      } else {
+        errors.password = "Password incorrect";
+        console.log(errors);
+        return res.status(400).json(errors);
+      }
+    });
+  });
+});
+
 // @route   GET api/users/current
 // @desc    Return current user
 // @access  Private
